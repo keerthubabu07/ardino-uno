@@ -1,0 +1,52 @@
+#define trigPin 13
+#define echoPin 12
+#define ldrPin  A0
+
+#define buzzer 8
+#define buzzerPin 8
+
+void setup()
+{ pinMode(trigPin, OUTPUT);
+pinMode(echoPin, INPUT);
+pinMode(buzzer,OUTPUT);
+
+Serial.begin(9600);
+pinMode(buzzerPin, OUTPUT);
+pinMode(ldrPin, INPUT);
+}
+
+
+void loop()
+{ int ldrStatus = analogRead(ldrPin);
+if (ldrStatus >= 600) {
+tone(buzzerPin, 100);
+delay(100);
+noTone(buzzerPin);
+delay(100);
+}
+else {
+noTone(buzzerPin);
+}
+  
+  long duration, distance;
+digitalWrite(trigPin, LOW); 
+delayMicroseconds(2); 
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10); 
+digitalWrite(trigPin, LOW);
+
+duration = pulseIn(echoPin, HIGH);
+distance = (duration/2) / 29.1;
+
+if (distance < 45) 
+{ 
+digitalWrite(buzzer,HIGH);
+delay(100);
+digitalWrite(buzzer,LOW); 
+delay(100);
+} else
+{
+
+digitalWrite(buzzer,LOW); 
+} delay(500);
+}
